@@ -11,19 +11,26 @@ class UserController extends Controller
 {
     // create
     public function create(UserCreateRequest $request) {
-        $validateData = $request->validate([
-            'name' => 'required|string:users',
-            'email' => 'required|string:users',
-            'password' => 'required|numeric:users',
-        ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-        ]);
-        // return response()->json($user);
-        return response('User inserido com sucesso.');
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->save();
+        return response()->json($user);
+        // $validateData = $request->validate([
+        //     'name' => 'required|string:users',
+        //     'email' => 'required|string:users',
+        //     'password' => 'required|numeric:users',
+        // ]);
+
+        // $user = User::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'password' => $request->password,
+        // ]);
+
+        // return response('User inserido com sucesso.');
 
     }
     // read
@@ -36,7 +43,9 @@ class UserController extends Controller
         }
     }
     
-    public function findAll() {}
+    public function findAll() {
+        echo 'aqui';
+    }
     // update
     public function update() {}
     // delete
