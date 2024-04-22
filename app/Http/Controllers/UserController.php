@@ -12,23 +12,27 @@ class UserController extends Controller
     // create
     public function create(UserCreateRequest $request) {
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->save();
-        return response()->json($user);
+        // Jeito 1
+        // $user = new User();
+        // $user->name = $request->name;
+        // $user->email = $request->email;
+        // $user->password = $request->password;
+        // $user->save();
+
+        // Jeito 2 -> fillable
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+
         // $validateData = $request->validate([
         //     'name' => 'required|string:users',
         //     'email' => 'required|string:users',
         //     'password' => 'required|numeric:users',
         // ]);
 
-        // $user = User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => $request->password,
-        // ]);
+        return response()->json($user);
 
         // return response('User inserido com sucesso.');
 
@@ -44,8 +48,16 @@ class UserController extends Controller
     }
     
     public function findAll() {
-        echo 'aqui';
+        $users = User::all();
+        return response()->json($users);
     }
+
+    public function findMultiple(Request $request) {
+        $allId = $request->input('ids');
+        $users = User::whereIn('id', $allId)->get();
+        return response()->json($users);        
+    }
+
     // update
     public function update() {}
     // delete

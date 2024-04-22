@@ -24,3 +24,4 @@ Route::get('/', [UserController::class, 'findAll']);
 Route::get('/{id}', [UserController::class, 'findById']);
 Route::put('/', [UserController::class, 'update']);
 Route::put('/{id}', [UserController::class, 'delete']);
+Route::post('/findMultiple',[UserController::class, 'findMultiple']);
